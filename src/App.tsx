@@ -1,7 +1,9 @@
+
+import './global.css' 
+import KanbanBoard from './components/board'
+
 export function App() {
   return (
-    <h1>
-      Kanban Board
-    </h1>
+    <KanbanBoard />
   )
 }
