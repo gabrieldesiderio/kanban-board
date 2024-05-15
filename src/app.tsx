@@ -10,13 +10,13 @@ export function App() {
   return (
     <ThemeProvider>
       <BoardProvider>
-        <main className="flex h-screen flex-col overflow-hidden bg-background antialiased">
+        <main className="flex h-dvh flex-col overflow-hidden bg-background antialiased">
           <Header />
           <div className="flex-1 overflow-hidden p-4">
             <Board />
           </div>
         </main>
-        <Toaster />
+        <Toaster richColors closeButton />
       </BoardProvider>
     </ThemeProvider>
   )

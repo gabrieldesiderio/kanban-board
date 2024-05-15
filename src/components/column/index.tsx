@@ -40,7 +40,7 @@ export function Column({ column, index, tasks }: ColumnProps) {
                   ref={provided.innerRef}
                   data-dragging-over={snapshot.isDraggingOver}
                   {...provided.droppableProps}
-                  className="h-full space-y-3 rounded-md p-1 data-[dragging-over=true]:border data-[dragging-over=true]:border-dashed"
+                  className="h-full space-y-3 rounded-md p-1 transition-all data-[dragging-over=true]:border data-[dragging-over=true]:border-dashed"
                 >
                   {tasks?.map((task, taskIndex) => (
                     <Task key={task.title} task={task} index={taskIndex} />

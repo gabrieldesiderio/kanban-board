@@ -1,7 +1,7 @@
 import { SquareKanban } from 'lucide-react'
 
-import { AddTaskModal } from './board/add-task-modal'
 import { BoardSettingsDrawer } from './board/board-settings-drawer'
+import { CreateTaskDialog } from './create-task-dialog'
 import { ThemeModeToggle } from './theme-mode-toggle'
 
 export function Header() {
@@ -13,7 +13,7 @@ export function Header() {
         Kanban Board
       </h1>
       <div className="flex gap-2">
-        <AddTaskModal />
+        <CreateTaskDialog />
         <BoardSettingsDrawer />
       </div>
     </header>

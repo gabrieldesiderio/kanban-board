@@ -1,24 +1,19 @@
-import { Minus, Plus, SlidersHorizontal } from 'lucide-react'
-import * as React from 'react'
+import { SlidersHorizontal } from 'lucide-react'
+import { useContext } from 'react'
+import { Cell, Pie, PieChart } from 'recharts'
 
 import { Button } from '@/components/ui/button'
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer'
+import { BoardContent } from '@/context/board-content'
 
 export function BoardSettingsDrawer() {
-  const [goal, setGoal] = React.useState(350)
-
-  function onClick(adjustment: number) {
-    setGoal(Math.max(200, Math.min(400, goal + adjustment)))
-  }
+  const { overview, totalTasks } = useContext(BoardContent)
 
   return (
     <Drawer>
@@ -30,47 +25,38 @@ export function BoardSettingsDrawer() {
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
-            <DrawerTitle>Move Goal</DrawerTitle>
-            <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+            <DrawerTitle className="text-center">Overview</DrawerTitle>
           </DrawerHeader>
-          <div className="p-4 pb-0">
-            <div className="flex items-center justify-center space-x-2">
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-8 w-8 shrink-0 rounded-full"
-                onClick={() => onClick(-10)}
-                disabled={goal <= 200}
+          <div className="flex items-center justify-center">
+            <PieChart width={384} height={192}>
+              <Pie
+                data={overview}
+                cx="50%"
+                cy="70%"
+                startAngle={180}
+                endAngle={0}
+                innerRadius={80}
+                outerRadius={100}
+                paddingAngle={5}
+                dataKey="amount"
+                label
               >
-                <Minus className="h-4 w-4" />
-                <span className="sr-only">Decrease</span>
-              </Button>
-              <div className="flex-1 text-center">
-                <div className="text-7xl font-bold tracking-tighter">
-                  {goal}
-                </div>
-                <div className="text-[0.70rem] uppercase text-muted-foreground">
-                  Calories/day
-                </div>
+                {overview.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+            </PieChart>
+          </div>
+          <div className="-my-16 flex items-center justify-center space-x-2 pb-32">
+            <div className="flex-1 text-center">
+              <div className="text-7xl font-bold tracking-tighter">
+                {totalTasks}
               </div>
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-8 w-8 shrink-0 rounded-full"
-                onClick={() => onClick(10)}
-                disabled={goal >= 400}
-              >
-                <Plus className="h-4 w-4" />
-                <span className="sr-only">Increase</span>
-              </Button>
+              <div className="text-[0.70rem] uppercase text-muted-foreground">
+                Tasks
+              </div>
             </div>
           </div>
-          <DrawerFooter>
-            <Button>Submit</Button>
-            <DrawerClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DrawerClose>
-          </DrawerFooter>
         </div>
       </DrawerContent>
     </Drawer>
