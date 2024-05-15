@@ -5,9 +5,10 @@ import { Task } from '@/types/task'
 
 type BoardContentType = {
   columns: Column[]
-  tasks: Task[]
+  tasks: Task[][]
+  setTasks: (tasks: Task[][]) => void
   createColumn: (column: Column) => void
-  createTask: (task: Task) => void
+  createTask: (title: string, description: string) => void
 }
 
 export const BoardContent = createContext({} as BoardContentType)
@@ -36,104 +37,40 @@ export function BoardProvider({ children }: { children: ReactNode }) {
     },
   ])
 
-  const [tasks, setTasks] = useState<Task[]>([
-    {
-      title: 'Task 1',
-      description: 'Description task 1',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 2',
-      description: 'Description task 2',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 3',
-      description: 'Description task 3',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 4',
-      description: 'Description task 4',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 5',
-      description: 'Description task 5',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 6',
-      description: 'Description task 6',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 7',
-      description: 'Description task 7',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 8',
-      description: 'Description task 8',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 9',
-      description: 'Description task 9',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 10',
-      description: 'Description task 10',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 11',
-      description: 'Description task 11',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 12',
-      description: 'Description task 12',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 13',
-      description: 'Description task 13',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 14',
-      description: 'Description task 14',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 15',
-      description: 'Description task 15',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 16',
-      description: 'Description task 16',
-      status: 'Backlog',
-    },
-    {
-      title: 'Task 17',
-      description: 'Description task 17',
-      status: 'Backlog',
-    },
+  const [tasks, setTasks] = useState<Task[][]>([
+    [
+      {
+        title: 'Task 1',
+        description: 'Description for task 1',
+      },
+    ],
+    [
+      {
+        title: 'Task 2',
+        description: 'Description for task 2',
+      },
+    ],
   ])
 
   function createColumn(column: Column) {
     setColumns((prev) => [...prev, column])
   }
 
-  function createTask(task: Task) {
-    setTasks((prev) => [...prev, task])
+  function createTask(title: string, description: string) {
+    if (!title || !description) {
+      return
+    }
+
+    const cloneTasks = [...tasks]
+    cloneTasks[0].push({ title, description })
+
+    setTasks([...cloneTasks])
   }
 
   return (
-    <BoardContent.Provider value={{ columns, tasks, createColumn, createTask }}>
+    <BoardContent.Provider
+      value={{ columns, tasks, setTasks, createColumn, createTask }}
+    >
       {children}
     </BoardContent.Provider>
   )

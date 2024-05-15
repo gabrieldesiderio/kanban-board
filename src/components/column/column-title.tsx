@@ -21,7 +21,7 @@ export function ColumnTitle({
         style={{ backgroundColor: column.color }}
       />
       <h2 className="whitespace-nowrap text-sm font-medium">{column.title}</h2>
-      <p className="text-xs text-muted-foreground">{tasksAmount}</p>
+      <p className="text-xs text-muted-foreground">{tasksAmount ?? 0}</p>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import './global.css'
 
-import Board from './components/board'
+import { Board } from './components/board'
 import { Header } from './components/header'
 import { ThemeProvider } from './components/theme-provider'
 import { Toaster } from './components/ui/sonner'
